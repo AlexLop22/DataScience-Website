@@ -1,0 +1,19 @@
+HTML (Hypertext Markup Language) is the standard language used to create web pages. It's not a programming language but a markup language, which means it's used to structure content on the web. HTML consists of a series of elements that you use to enclose or wrap different parts of the content to make it appear or act in a certain way.
+
+Here's a step-by-step guide to creating a simple HTML document:
+
+Text Editor:
+You can use a simple text editor like Notepad (Windows), TextEdit (Mac), or more advanced code editors like Visual Studio Code, Sublime Text, or Atom to write HTML code.
+
+Basic Structure:
+Every HTML document starts with a basic structure. It consists of an opening <html> tag and a closing </html> tag. Inside this, you have two main sections: the <head> and the <body>.
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My First Web Page</title>
+</head>
+<body>
+    <!-- Your content goes here -->
+</body>
+</html>
