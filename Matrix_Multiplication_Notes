@@ -1,0 +1,68 @@
+Matrix multiplication is a binary operation that takes a pair of matrices, typically denoted as A and B, and produces another matrix, often denoted as C, where each element in the resulting matrix C is calculated based on a specific combination of elements from matrices A and B. Matrix multiplication is a fundamental operation in linear algebra and is used extensively in various fields, including computer graphics, physics, engineering, and machine learning.
+
+Here's how matrix multiplication is defined:
+
+Given two matrices A and B:
+
+Matrix A has dimensions m x n (m rows and n columns).
+Matrix B has dimensions n x p (n rows and p columns).
+The resulting matrix C, obtained by multiplying A and B, will have dimensions m x p (m rows and p columns).
+
+Matrix multiplication is performed by taking the dot product of rows from matrix A with columns from matrix B. To calculate the element at the i-th row and j-th column of matrix C (C[i][j]), you perform the following operation:
+
+�
+[
+�
+]
+[
+�
+]
+=
+∑
+�
+=
+1
+�
+(
+�
+[
+�
+]
+[
+�
+]
+∗
+�
+[
+�
+]
+[
+�
+]
+)
+C[i][j]=∑ 
+k=1
+n
+​
+ (A[i][k]∗B[k][j])
+
+In this formula:
+
+i represents the row index of matrix C.
+j represents the column index of matrix C.
+k is the index for the summation and varies from 1 to n, where n is the number of columns in matrix A (which is also the number of rows in matrix B).
+A[i][k] represents an element from matrix A in the i-th row and k-th column.
+B[k][j] represents an element from matrix B in the k-th row and j-th column.
+Matrix multiplication is not commutative, meaning that in general, 
+�
+⋅
+�
+A⋅B is not equal to 
+�
+⋅
+�
+B⋅A. This is because the dimensions of the matrices matter, and for the multiplication to be defined, the number of columns in matrix A must match the number of rows in matrix B.
+
+Matrix multiplication plays a crucial role in various applications, including:
+
+Transformation in Computer Graphics: Matrix multiplication is used to transform 2D and 3D objects in computer graphics, allowing for translations, rotations, scaling, and more.
