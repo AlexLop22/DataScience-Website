@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Guessing Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        .container {
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Number Guessing Game</h1>
+        <p>Guess a number between 1 and 100:</p>
+        <input type="text" id="userGuess" placeholder="Enter your guess">
+        <button onclick="checkGuess()">Submit Guess</button>
+        <button onclick="resetGame()">Reset</button>
+        <p id="result"></p>
+        <p>Attempts: <span id="attempts">0</span></p>
+        <p>Guessed Numbers: <span id="guessedNumbers"></span></p>
+    </div>
+
+    <script>
+        const targetNumber = Math.floor(Math.random() * 100) + 1;
+        let attempts = 0;
+        let guessedNumbers = [];
+
+        function checkGuess() {
+            const userGuessElement = document.getElementById('userGuess');
+            const userGuess = parseInt(userGuessElement.value, 10);
+
+            if (isNaN(userGuess) || userGuess < 1 || userGuess > 100) {
+                alert('Please enter a valid number between 1 and 100.');
+                return;
+            }
+
+            attempts++;
+            const attemptsElement = document.getElementById('attempts');
+            attemptsElement.innerText = attempts;
+
+            const resultElement = document.getElementById('result');
+            if (userGuess === targetNumber) {
+                resultElement.innerText = `Congratulations! You guessed the correct number in ${attempts} attempts.`;
+                userGuessElement.disabled = true;
+            } else if (userGuess < targetNumber) {
+                resultElement.innerText = 'Too low. Try again!';
+                if (targetNumber - userGuess < 10) {
+                    resultElement.innerText += ' Getting closer!';
+                }
+            } else {
+                resultElement.innerText = 'Too high. Try again!';
+                if (userGuess - targetNumber < 10) {
+                    resultElement.innerText += ' Getting closer!';
+                }
+            }
+
+            guessedNumbers.push(userGuess);
+            const guessedNumbersElement = document.getElementById('guessedNumbers');
+            guessedNumbersElement.innerText = guessedNumbers.join(', ');
+        }
+
+        function resetGame() {
+            const userGuessElement = document.getElementById('userGuess');
+            userGuessElement.value = '';
+            userGuessElement.disabled = false;
+
+            const attemptsElement = document.getElementById('attempts');
+            attempts = 0;
+            attemptsElement.innerText = attempts;
+
+            const resultElement = document.getElementById('result');
+            resultElement.innerText = '';
+
+            guessedNumbers = [];
+            const guessedNumbersElement = document.getElementById('guessedNumbers');
+            guessedNumbersElement.innerText = '';
+
+            targetNumber = Math.floor(Math.random() * 100) + 1;
+        }
+    </script>
+</body>
+</html>
+
