@@ -1,0 +1,28 @@
+from google.colab import drive
+drive.mount('/content/drive')
+
+import os
+import matplotlib.pyplot as plt
+from PIL import Image
+
+def load_images_from_folder(folder_path):
+    images = []
+    for filename in os.listdir(folder_path):
+        img_path = os.path.join(folder_path, filename)
+        img = Image.open(img_path)
+        images.append(img)
+    return images
+
+def display_montage(images):
+    plt.figure(figsize=(10, 10))
+    for i in range(len(images)):
+        plt.subplot(1, len(images), i + 1)
+        plt.imshow(images[i])
+        plt.axis('off')
+    plt.show()
+
+folder_path = '/content/data/MNIST'
+
+images = load_images_from_folder(folder_path)
+display_montage(images)
+
