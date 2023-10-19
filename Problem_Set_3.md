@@ -1,13 +1,14 @@
-Data Loading
+# Flowers 102
+
+## Data Loading
 
 In this section, we will go through the process of loading the Flowers 102 dataset, preparing the data for analysis, and visualizing a sample image from the dataset.
 
-Loading Libraries
+### Loading Libraries
 
-We begin by importing the necessary Python libraries, including matplotlib.pyplot for image visualization. We also define a custom function called plot that allows us to display images with optional titles.
+We begin by importing the necessary Python libraries, including `matplotlib.pyplot` for image visualization. We also define a custom function called `plot` that allows us to display images with optional titles.
 
-
-
+```python
 import matplotlib.pyplot as plt
 
 # Define a function for plotting images
@@ -24,8 +25,7 @@ def plot(x, title=None):
         x_np = x_np.squeeze(2)
 
     x_np = x_np.clip(0, 1)
-
-    # Create a matplotlib figure and axis for plotting
+ # Create a matplotlib figure and axis for plotting
     fig, ax = plt.subplots()
     if len(x_np.shape) == 2:  # Grayscale
         im = ax.imshow(x_np, cmap='gray')
@@ -35,27 +35,28 @@ def plot(x, title=None):
     ax.axis('off')
     fig.set_size_inches(10, 10)
     plt.show()
+```
 
-Downloading and Extracting the Dataset
+### Downloading and Extracting the Dataset
 
 Next, we download and extract the Flowers 102 dataset. The dataset consists of images of various flowers, and we'll use it for further analysis. Here are the steps involved:
 
-Download the dataset labels and image zip file.
-Unzip the image files.
+1. Download the dataset labels and image zip file.
+2. Unzip the image files.
 
-
-Downloading and extracting the dataset
-Uncomment the following lines if you are running this in a Jupyter Notebook
-
+```python
+# Downloading and extracting the dataset
+# Uncomment the following lines if you are running this in a Jupyter Notebook
 !wget https://gist.githubusercontent.com/JosephKJ/94c7728ed1a8e0cd87fe6a029769cde1/raw/403325f5110cb0f3099734c5edb9f457539c77e9/Oxford-102_Flower_dataset_labels.txt
 !wget https://s3.amazonaws.com/content.udacity-data.com/courses/nd188/flower_data.zip
 !unzip 'flower_data.zip'
+```
 
+### Loading and Preprocessing the Data
 
-Loading and Preprocessing the Data
+Now, we load and preprocess the dataset using PyTorch's `datasets` and `transforms` modules. We also load the dataset labels into a Pandas DataFrame for reference.
 
-Now, we load and preprocess the dataset using PyTorch's datasets and transforms modules. We also load the dataset labels into a Pandas DataFrame for reference.
-
+```python
 import torch
 from torchvision import datasets, transforms
 import os
@@ -85,27 +86,27 @@ images, labels = next(iter(dataloader))
 
 print(f"Images tensor shape: {images.shape}")
 print(f"Labels tensor shape: {labels.shape}")
-
-
+```
 
 Finally, we visualize the 11th image from the dataset along with its corresponding label:
 
+```python
 i = 11
 # Plot the 11th image from the dataset with its label
 plot(images[i], dataset_labels[i])
+```
+
 This concludes the data loading and preprocessing section, and we move on to using a pretrained AlexNet for image classification.
 
-
-
-
-Pretrained AlexNet
+## Pretrained AlexNet
 
 In this section, we'll use a pretrained AlexNet model to classify an image from the Flowers 102 dataset.
 
-Loading Pretrained AlexNet
+### Loading Pretrained AlexNet
 
 We start by loading a pretrained AlexNet model and some associated labels for classifying the images. We also define a preprocessing transformation for the input image.
 
+```python
 import torch
 from torchvision import models, transforms
 import requests
@@ -117,7 +118,8 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 # Define AlexNet model
 alexnet = models.alexnet(pretrained=True).to(device)
-labels = {int(key): value for (key, value) in requests.get('https://s3.amazonaws.com/mlpipes/pytorch-quick-start/labels.json').json().items()}
+labels = {int(key): value for (key, value) in requests.get('https://s3.amazonaws.com/mlpipes/pytorch-quick
+start/labels.json').json().items()}
 
 # Transform image for use in the model
 preprocess = transforms.Compose([
@@ -140,23 +142,20 @@ img_t.shape
 # Classify the image with AlexNet
 scores, class_idx = alexnet(img_t).max(1)
 print('Predicted class:', labels[class_idx.item()])
+```
 
-In this code, we load a pretrained AlexNet model and define a transformation to preprocess the input image. We then load the 11th image from our dataset, preprocess it, and use the AlexNet model to classify it, printing out the predicted class label.
+In this code, we load a pretrained AlexNet model and define a transformation to preprocess the input image. We then load the 11th image 
+from our dataset, preprocess it, and use the AlexNet model to classify it, printing out the predicted class label.
 
-
-
-
-
-Finetuning
-
+## Finetuning
 
 In this section, we explore the weights of various layers in the AlexNet model and visualize feature maps with filters.
 
-Extracting Layer Weights
+### Extracting Layer Weights
+
 We begin by extracting the weights of several layers in the AlexNet model, including convolutional layers and classifier layers.
 
-
-
+```python
 # Extract the weights of various layers in AlexNet
 w0 = alexnet.features[0].weight.data
 w1 = alexnet.features[3].weight.data
@@ -166,25 +165,24 @@ w4 = alexnet.features[10].weight.data
 w5 = alexnet.classifier[1].weight.data
 w6 = alexnet.classifier[4].weight.data
 w7 = alexnet.classifier[6].weight.data
+```
 
+### Scaling and Visualizing Images
 
-Scalling Images
+We define functions to scale and visualize image tensors:
 
+```python
 # Define a function to scale an image tensor
 def scale(img):
     # Normalize the NumPy array to the range [0, 1]
     max_value = img.max()
     min_value = img.min()
     normalized_array = (img - min_value) / (max_value - min_value)
-    return normalized_array
+ return normalized_array
 
 # Define a function to plot an image tensor
 def tensor_plot(img_t, index=0):
    
-
-
-
-
 
 
 
